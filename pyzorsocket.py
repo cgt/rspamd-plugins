@@ -19,7 +19,7 @@ class RequestHandler(StreamRequestHandler):
             self.write_json({"error": "unknown command"})
 
     def handle_check(self):
-        parser = email.parser.BytesParser(policy=email.policy.SMTPUTF8)
+        parser = email.parser.BytesParser(policy=email.policy.SMTP)
         msg = parser.parse(self.rfile)
 
         digest = pyzor.digest.DataDigester(msg).value
