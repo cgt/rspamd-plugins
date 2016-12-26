@@ -29,6 +29,8 @@ setup(
     classifiers=[
         "License :: OSI Approved",
         "Programming Language :: Python :: 3 :: Only",
+        "Programming Language :: Python :: 3.4",
+        "Programming Language :: Python :: 3.5",
     ],
     keywords="pyzor spam",
 )
