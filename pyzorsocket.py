@@ -16,8 +16,7 @@ class RequestHandler(StreamRequestHandler):
         if cmd == "CHECK":
             self.handle_check()
         else:
-            d = {"error": "unknown command"}
-            self.write_json(d)
+            self.write_json({"error": "unknown command"})
 
     def handle_check(self):
         parser = email.parser.BytesParser(policy=email.policy.SMTPUTF8)
@@ -26,8 +25,7 @@ class RequestHandler(StreamRequestHandler):
         digest = pyzor.digest.DataDigester(msg).value
         check = pyzor.client.Client().check(digest)
 
-        d = {k: v for k, v in check.items()}
-        self.write_json(d)
+        self.write_json({k: v for k, v in check.items()})
 
     def write_json(self, d):
         j = json.dumps(d) + "\n"
@@ -47,7 +45,11 @@ def rm(path):
             raise
 
 
-def main(args):
+def main():
+    argp = argparse.ArgumentParser(description="Expose pyzor on a socket")
+    argp.add_argument("addr", help="path to open unix socket at")
+    args = argp.parse_args()
+
     rm(args.addr)
 
     srv = Server(args.addr, RequestHandler)
@@ -59,7 +61,4 @@ def main(args):
 
 
 if __name__ == "__main__":
-    args = argparse.ArgumentParser(description="Expose pyzor on a socket")
-    args.add_argument("addr", help="path to open unix socket at")
-
-    main(args.parse_args())
+    main()
