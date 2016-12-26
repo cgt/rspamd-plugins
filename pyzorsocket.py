@@ -1,7 +1,7 @@
+import argparse
 import email.parser
 import email.policy
 import os
-import sys
 import json
 from socketserver import UnixStreamServer, ThreadingMixIn, StreamRequestHandler
 
@@ -38,21 +38,28 @@ class Server(ThreadingMixIn, UnixStreamServer):
     pass
 
 
-def main():
-    addr = "./sock"
-
+def rm(path):
+    """Remove file at path. Ignores error if file does not exist."""
     try:
-        os.remove(addr)
+        os.remove(path)
     except OSError:
-        if os.path.exists(addr):
+        if os.path.exists(path):
             raise
 
-    srv = Server(addr, RequestHandler)
+
+def main(args):
+    rm(args.addr)
+
+    srv = Server(args.addr, RequestHandler)
     try:
         srv.serve_forever()
     finally:
         srv.server_close()
+        rm(args.addr)
 
 
 if __name__ == "__main__":
-    main()
+    args = argparse.ArgumentParser(description="Expose pyzor on a socket")
+    args.add_argument("addr", help="path to open unix socket at")
+
+    main(args.parse_args())
