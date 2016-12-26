@@ -1,31 +1,37 @@
-import email.feedparser
+import email.parser
 import email.policy
 import os
 import sys
 import json
-from socketserver import UnixStreamServer, ThreadingMixIn, BaseRequestHandler
+from socketserver import UnixStreamServer, ThreadingMixIn, StreamRequestHandler
 
 import pyzor.client
 import pyzor.digest
 
 
-class RequestHandler(BaseRequestHandler):
+class RequestHandler(StreamRequestHandler):
+
     def handle(self):
-        parser = email.feedparser.BytesFeedParser(policy=email.policy.SMTPUTF8)
+        cmd = self.rfile.readline().decode()[:-1]
+        if cmd == "CHECK":
+            self.handle_check()
+        else:
+            d = {"error": "unknown command"}
+            self.write_json(d)
 
-        while True:
-            data = self.request.recv(256)
-            if len(data) == 0:
-                break
-            parser.feed(data)
+    def handle_check(self):
+        parser = email.parser.BytesParser(policy=email.policy.SMTPUTF8)
+        msg = parser.parse(self.rfile)
 
-        msg = parser.close()
         digest = pyzor.digest.DataDigester(msg).value
         check = pyzor.client.Client().check(digest)
 
         d = {k: v for k, v in check.items()}
+        self.write_json(d)
+
+    def write_json(self, d):
         j = json.dumps(d) + "\n"
-        self.request.sendall(j.encode("utf-8"))
+        self.wfile.write(j.encode())
 
 
 class Server(ThreadingMixIn, UnixStreamServer):
