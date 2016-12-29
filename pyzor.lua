@@ -28,6 +28,10 @@ local N = "pyzor"
 local symbol_pyzor = "PYZOR"
 local opts = rspamd_config:get_all_opt(N)
 
+-- Default settings
+local cfg_host = "localhost"
+local cfg_port = 5953
+
 --{"PV": "2.1", "Code": "200", "WL-Count": "0", "Count": "53", "Thread": "53416", "Diag": "OK"}
 
 local function check_pyzor(task)
@@ -66,13 +70,21 @@ local function check_pyzor(task)
 	tcp.request({
 		task = task,
 		host = opts["host"],
+		port = opts["port"],
 		shutdown = true,
 		data = request,
 		callback = cb,
 	})
 end
 
-if opts and opts['host'] then
+if opts then
+	if opts.host then
+		cfg_host = opts.host
+	end
+	if opts.port then
+		cfg_port = opts.port
+	end
+
 	rspamd_config:register_symbol({
 		name = symbol_pyzor,
 		callback = check_pyzor,
