@@ -55,6 +55,11 @@ local function check_pyzor(task)
 
 		logger.infox("count=%s wl=%s", reported, whitelisted)
 
+		-- Make whitelists count a little bit.
+		-- Maybe there's a better way to take whitelists into account,
+		-- but at least this is something.
+		reported = reported - whitelisted
+
         local weight = 0
 
 		if reported >= 100 then
