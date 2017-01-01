@@ -55,9 +55,21 @@ local function check_pyzor(task)
 
 		logger.infox("count=%s wl=%s", reported, whitelisted)
 
-		if reported >= 5 then
-			task:insert_result(symbol_pyzor, 1.0, reported)
+        local weight = 0
+
+		if reported >= 100 then
+            weight = 1.5
+        elseif reported >= 25 then
+            weight = 1.25
+        elseif reported >= 5 then
+            weight = 1.0
+        elseif reported >= 1 and whitelisted == 0 then
+            weight = 0.2
 		end
+
+        if weight > 0 then
+            task:insert_result(symbol_pyzor, weight, string.format("count=%d wl=%d", reported, whitelisted))
+        end
 	end
 
 	local request = {
