@@ -40,7 +40,7 @@ local function check_pyzor(task)
 			logger.errx("request error: %s", err)
 			return
 		end
-		logger.infox('err: %1, data: %2', err, tostring(data))
+		logger.debugm(N, task, 'data: %s', tostring(data))
 
 		local parser = ucl.parser()
 		local ok, err = parser:parse_string(tostring(data))
@@ -77,7 +77,7 @@ local function check_pyzor(task)
 		task:get_content(),
 	}
 
-	logger.debugm(N, task, "sending to pyzor")
+	logger.debugm(N, task, "querying pyzor")
 
 	tcp.request({
 		task = task,
