@@ -12,7 +12,7 @@ setup(
     author="Christoffer G. Thomsen",
     author_email="chris@cgt.name",
 
-    url = "https://github.com/cgt/rspamd-plugins/pyzor/pyzorsocket",
+    url = "https://github.com/cgt/rspamd-plugins/tree/master/pyzor/pyzorsocket",
     description="Expose pyzor on a socket",
     long_description=readme(),
 
