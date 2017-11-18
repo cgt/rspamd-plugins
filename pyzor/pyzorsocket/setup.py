@@ -7,13 +7,13 @@ def readme():
 setup(
     name="pyzorsocket",
     version="0.1",
-    license="Boost Software License 1.0",
+    license="MIT",
 
     author="Christoffer G. Thomsen",
     author_email="chris@cgt.name",
 
-    url = "https://github.com/cgt/pyzorsocket",
-    description="expose pyzor on a socket",
+    url = "https://github.com/cgt/rspamd-plugins/pyzor/pyzorsocket",
+    description="Expose pyzor on a socket",
     long_description=readme(),
 
     py_modules=["pyzorsocket"],
@@ -27,10 +27,8 @@ setup(
     ],
 
     classifiers=[
-        "License :: OSI Approved",
+        "License :: OSI Approved :: MIT License",
         "Programming Language :: Python :: 3 :: Only",
-        "Programming Language :: Python :: 3.4",
-        "Programming Language :: Python :: 3.5",
     ],
     keywords="pyzor spam",
 )

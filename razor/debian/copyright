@@ -1,0 +1,7 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: rspamd-plugins
+Source: https://github.com/cgt/rspamd-plugins/razor
+
+Files: *
+Copyright: 2017 Christoffer G. Thomsen <chris@cgt.name>
+License: Expat

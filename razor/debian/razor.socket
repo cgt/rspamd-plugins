@@ -1,0 +1,9 @@
+[Unit]
+Description=Razor socket
+
+[Socket]
+ListenStream=127.0.0.1:9192
+Accept=yes
+
+[Install]
+WantedBy=sockets.target

@@ -1,0 +1,24 @@
+[Unit]
+Description=Razor Socket Service
+Requires=razor.socket
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/razorsocket
+StandardInput=socket
+StandardError=journal
+TimeoutStopSec=10
+
+User=razorsocket
+NoNewPrivileges=true
+PrivateDevices=true
+PrivateTmp=true
+PrivateUsers=true
+ProtectControlGroups=true
+ProtectHome=true
+ProtectKernelModules=true
+ProtectKernelTunables=true
+ProtectSystem=strict
+
+[Install]
+WantedBy=multi-user.target

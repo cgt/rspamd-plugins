@@ -38,12 +38,7 @@ The client closes its socket for writing, and the server replies:
 	{"Thread": "16329", "Diag": "OK", "Count": "0", "Code": "200", "PV": "2.1", "WL-Count": "0"}\n
 
 ## License
-Copyright Christoffer G. Thomsen 2016
-
-Distributed under the Boost Software License, Version 1.0.
-
-(See accompanying file LICENSE or copy at
-<http://www.boost.org/LICENSE_1_0.txt>)
+Distributed under the MIT license. See top-level LICENSE file.
 
 Note that this license does not apply to pyzor itself,
 which is distributed under the GNU General Public License version 2.

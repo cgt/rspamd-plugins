@@ -1,0 +1,12 @@
+Source: rspamd-razor
+Section: mail
+Priority: optional
+Maintainer: Christoffer G. Thomsen <chris@cgt.name>
+Build-Depends: debhelper (>= 9)
+Standards-Version: 3.9.8
+Homepage: https://github.com/cgt/rspamd-plugins/razor
+
+Package: rspamd-razor
+Architecture: all
+Depends: razor (>= 2.85), rspamd (>= 1.6.5), systemd (>= 232), ${misc:Depends}
+Description: Integrate Vipul's Razor with Rspamd.
