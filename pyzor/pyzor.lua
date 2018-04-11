@@ -15,7 +15,7 @@ local cfg_port = 5953
 local function check_pyzor(task)
     local function cb(err, data)
         if err then
-            logger.errx("request error: %s", err)
+            logger.errx(task, "request error: %s", err)
             return
         end
         logger.debugm(N, task, 'data: %s', tostring(data))
@@ -23,7 +23,7 @@ local function check_pyzor(task)
         local parser = ucl.parser()
         local ok, err = parser:parse_string(tostring(data))
         if not ok then
-            logger.errx("error parsing response: %s", err)
+            logger.errx(task, "error parsing response: %s", err)
             return
         end
 
@@ -31,7 +31,7 @@ local function check_pyzor(task)
         local whitelisted = tonumber(resp["WL-Count"])
         local reported = tonumber(resp["Count"])
 
-        logger.infox("count=%s wl=%s", reported, whitelisted)
+        logger.infox(task, "count=%s wl=%s", reported, whitelisted)
 
         -- Make whitelists count a little bit.
         -- Maybe there's a better way to take whitelists into account,
@@ -64,8 +64,8 @@ local function check_pyzor(task)
 
     tcp.request({
         task = task,
-        host = opts["host"],
-        port = opts["port"],
+        host = cfg_host,
+        port = cfg_port,
         shutdown = true,
         data = request,
         callback = cb,

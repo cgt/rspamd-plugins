@@ -12,7 +12,7 @@ local cfg_port = 9192
 local function check_razor(task)
     local function cb(err, data)
         if err then
-            logger.errx("request error: %s", err)
+            logger.errx(task, "request error: %s", err)
             return
         end
         local resp = tostring(data)
@@ -22,7 +22,7 @@ local function check_razor(task)
         elseif resp == "ham" then
             logger.debugm(N, task, "ham")
         else
-            logger.errx("unknown response from razorsocket: %s", resp)
+            logger.errx(task, "unknown response from razorsocket: %s", resp)
         end
     end
 
