@@ -23,7 +23,9 @@ class RequestHandler(StreamRequestHandler):
         msg = parser.parse(self.rfile)
 
         digest = pyzor.digest.DataDigester(msg).value
-        check = pyzor.client.Client().check(digest)
+        # whitelist 'default' digest (all messages with empty/short bodies)
+        if digest != 'da39a3ee5e6b4b0d3255bfef95601890afd80709':
+            check = pyzor.client.Client().check(digest)
 
         self.write_json({k: v for k, v in check.items()})
 
